@@ -1,0 +1,4 @@
+<% provide(:title, "New Course - ") %>
+<h1>Create a new course</h1>
+<p class="lead">Fill out the following fields below to create a new course.</p>
+<%= render 'courses/form', course: @course, url: courses_path, method: :post %>

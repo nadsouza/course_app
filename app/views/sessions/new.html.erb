@@ -1,0 +1,24 @@
+<% provide(:title, "Login - ") %>
+<h1>Login</h1>
+<p class="lead">Login to manage courses and locations.</p>
+<div class="form">
+  <%= form_for :session, url: login_path do |f| %>
+    <%= render 'shared/flash_messages' %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.text_field :email, class: 'form-control', placeholder: 'Email' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+    </div>
+    <div class="checkbox">
+      <%= f.label :remember_me, class: "checkbox inline" do %>
+      <%= f.check_box :remember_me %>
+      <span>Remember me on this computer</span>
+    </div>
+    <% end %>
+    <%= f.submit class: 'btn btn-primary btn-primary--wide', value: 'Login' %>
+  <% end %>
+</div>
+<p class="padding-top-three text-center">Not a user? <%= link_to 'Register here', register_path %></p>

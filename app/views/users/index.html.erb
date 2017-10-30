@@ -1,0 +1,58 @@
+<% if (@users.present?) %>
+  <h1 class="margin-bottom-three">All Coordinators</h1>
+  <p class="lead">List of all coordinators.</p>
+  <%= render 'shared/flash_messages' %>
+  <table class="table table-hover block">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th class="text-center">Date Added</th>
+        <th class="text-center">Last Updated</th>
+        <% if (logged_in?) %>
+          <th class="text-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |u| %>
+      <tr>
+        <td class="table__avatar">
+          <%= link_to user_path(u), class: '' do %>
+            <%= image_tag gravatar_url(u) %>
+          <% end %>
+        </td>
+        <td class="table__name bold">
+          <%= link_to user_path(u) do %>
+            <%= u.full_name %>
+          <% end %>
+        </td>
+        <td class="table__text bold">
+          <%= link_to user_path(u) do %>
+            <%= u.email %>
+          <% end %>
+        </td>
+        <td class="table__text text-center"><%= u.created_at.strftime("%d/%m/%Y") %></td>
+        <td class="table__text text-center"><%= elapsed_time(u.updated_at) %> ago</td>
+        <% if (logged_in?) %>
+          <td class="text-right">
+            <% if (current_user.id == u.id || is_admin?) %>
+              <%= link_to edit_user_path(u.id), title: "Edit #{u.full_name}" do %>
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+            <% if (is_admin?) %>
+              <%= link_to user_path(u.id), method: :delete, title: "Delete #{u.full_name}" do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= render 'shared/error_page', heading: 'Coordinators Not Found', message: 'Cannot find any coordinators within the application. Please register as a coordinator.' %>
+<% end %>

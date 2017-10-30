@@ -1,0 +1,26 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+john:
+  firstname: John
+  lastname: Doe
+  email: john.doe@rmit.edu.au
+jen:
+  firstname: Jenny
+  lastname: Nguyen
+  email: jenny.nguyen@rmit.edu.au
+jen:
+  firstname: Jen
+  lastname: Doe
+  email: jen.doe@rmit.edu.au
+luke:
+  firstname: Luke
+  lastname: Dam
+  email: luke.dam@rmit.edu.au
+ava:
+  firstname: Ava
+  lastname: Brian
+  email: ava.obrian@rmit.edu.au
+johnny:
+  firstname: Johnny
+  lastname: Huynh
+  email: johnny.huynh@rmit.edu.au

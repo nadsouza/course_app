@@ -1,0 +1,24 @@
+<%= image_tag gravatar_url(@user), class: 'profile__avatar' %>
+<div class="block">
+    <h3 class="profile__name margin-top-none"><%= @user.full_name %></h3>
+    <p class="profile__email"><%= @user.email %></p>
+    <p><strong>Date Created:</strong> <%= @user.created_at.strftime("%d/%m/%Y") %></p>
+    <p><strong>Last Updated:</strong> <%= elapsed_time(@user.updated_at) %> ago</p>
+    <div class="button-panel">
+      <div class="pull-right">
+        <% if (is_admin?) %>
+          <%= link_to user_path(@user), method: :delete, class: 'btn', title: "Remove #{@user.full_name}" do %>
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          <% end %>
+        <% end %>
+        <% if (logged_in?) %>
+          <% if (current_user.id == @user.id || is_admin?) %>
+            <%= link_to edit_user_path(@user), class: 'btn', title: "Edit #{@user.full_name}" do %>
+             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+</div>

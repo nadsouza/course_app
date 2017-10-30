@@ -1,0 +1,51 @@
+<% if (@locations.present?) %>
+  <h1 class="margin-bottom-three">All Locations</h1>
+  <p class="lead">List of all locations available.</p>
+  <%= render 'shared/flash_messages' %>
+  <table class="table table-hover block">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th class="text-center">Courses</th>
+        <th>Latest Course</th>
+        <th class="text-center">Date Added</th>
+        <th class="text-center">Last Updated</th>
+        <% if (logged_in?) %>
+          <th class="text-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @locations.each do |l| %>
+      <% course = l.courses.order(:updated_at).last %>
+      <tr>
+        <td><%= link_to l.name, location_path(l.id) %></td>
+        <td class="text-center"><%= l.courses.count %></td>
+        <td>
+          <% if (course.present?) %>
+            <%= link_to course.name, course_path(course.id) %>
+          <% else %>
+            None
+          <% end %>
+        </td>
+        <td class="text-center"><%= l.created_at.strftime("%d/%m/%Y") %></td>
+        <td class="text-center"><%= "#{elapsed_time(l.updated_at)} ago" %></td>
+        <% if (logged_in?) %>
+          <td class="text-right">
+            <%= link_to edit_location_path(l.id), title: "Edit #{l.name}" do %>
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <% end %>
+            <% if (is_admin?) %>
+              <%= link_to location_path(l.id), method: :delete, title: "Delete #{l.name}" do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= render 'shared/error_page', heading: 'Locations Not Found', message: 'Cannot find any locations within the application. Please create one by logging in as a user.' %>
+<% end %>

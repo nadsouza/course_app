@@ -1,0 +1,4 @@
+<% provide(:title, "New Category - ") %>
+<h1>Create a new category</h1>
+<p class="lead">Enter the name for a new category, example format Web Development.</p>
+<%= render 'categories/form', category: @category, url: categories_path, method: :post %>

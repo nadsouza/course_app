@@ -1,0 +1,26 @@
+I"x(function() {
+  window.App || (window.App = {});
+
+  App.init = function() {
+    $("a, span, i, div").tooltip();
+    $('.selectpicker').selectpicker();
+    $('#location').mask("999.99.999");
+    $("#session_email").change(function() {
+      if (this.value === 'admin') {
+        return $('#session_remember_me').parent().hide();
+      }
+    });
+    return $("input[type=file]").change(function() {
+      var arr, file;
+      arr = this.value.split('\\');
+      file = arr[2];
+      return $('.btn-file .caption').text(file);
+    });
+  };
+
+  $(document).on("turbolinks:load", function() {
+    return App.init();
+  });
+
+}).call(this);
+:ET

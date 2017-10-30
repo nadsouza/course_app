@@ -1,0 +1,42 @@
+<h1 class="margin-bottom-three"><%= @course.name %></h1>
+<div class="block">
+  <p><label>Category:</label> <% @course.categories.each do |category| %>
+    <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
+  <% end %></p>
+  <p><label>Location:</label> <% @course.locations.each do |location| %>
+    <span style="padding-right:25px;"> <%= link_to location.name, courses_path(:id => location.id, :table => "Location") %> </span>
+  <% end %></p>
+  <h4>Course Description: </h4>
+  <p><%= @course.description %></p>
+  <div class="button-panel">
+    <div class="pull-left">
+      <% if (is_admin?) %>
+        <%= link_to course_path(@course), method: :delete, class: 'btn', title: "Remove #{@course.name}" do %>
+         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        <% end %>
+      <% end %>
+      <% if (logged_in?) %>
+        <%= link_to edit_course_path(@course), class: 'btn', title: "Edit #{@course.name}" do %>
+         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="pull-right">
+      <% if (is_admin?) %>
+        <%= link_to reset_votes_path(@course), method: :delete, class: 'btn', title: "Reset Votes for #{@course.name}" do %>
+          <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+        <% end %>
+      <% end %>
+      <%= link_to downvote_path(@course), method: :post, class: 'btn', title: "Downvote #{@course.name}" do %>
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>  <%= Downvote.where(course_id: @course).count %>
+      <% end %>
+      <%= link_to upvote_path(@course), method: :post, class: 'btn btn-primary', title: "Upvote #{@course.name}" do %>
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>  <%= Upvote.where(course_id: @course).count %>
+      <% end %>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<%= link_to courses_path, class: 'btn btn-primary margin-top-three' do %>
+  <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Return to Courses List
+<% end %>

@@ -1,0 +1,6 @@
+<% if (@courses.present?) %>
+  <h1 class="margin-bottom-three"><%= @location.name %></h1>
+  <%= render 'shared/courses', courses: @courses %>
+<% else %>
+  <%= render 'shared/error_page', heading: 'Courses Not Found', message: "Cannot find any courses in #{@location.name}. Please create one by logging in as a user." %>
+<% end %>

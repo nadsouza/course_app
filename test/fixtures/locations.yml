@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+locationOne:
+  name: '080.04.006'
+locationTwo:
+  name: '056.05.097'
+locationThree:
+  name: '057.03.010'
+locationFour:
+  name: '080.04.011'

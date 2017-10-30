@@ -1,0 +1,30 @@
+<% provide(:title, "Registration - ") %>
+<h1>Edit Profile</h1>
+<p class="lead">Edit your account details below.</p>
+<div class="form">
+  <%= form_for @user, url: user_path(@user), method: :put do |f| %>
+    <%= render 'shared/collection_error_messages', collection: @user %>
+    <%= render 'shared/flash_messages' %>
+    <div class="form-group">
+      <%= f.label :firstname %>
+      <%= f.text_field :firstname, class: 'form-control', placeholder: 'First Name' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :lastname %>
+      <%= f.text_field :lastname, class: 'form-control', placeholder: 'Last Name' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.text_field :email, class: 'form-control', placeholder: 'Email' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password Confirmation' %>
+    </div>
+    <%= f.submit class: 'btn btn-primary btn-primary--wide', value: 'Register' %>
+  <% end %>
+</div>

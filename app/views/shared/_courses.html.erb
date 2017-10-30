@@ -1,0 +1,74 @@
+<%= render 'shared/flash_messages' %>
+<% courses.each_slice(3) do |group| %>
+  <div class="row display-flex">
+    <% group.each do |course| %>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <%= image_tag course.image, class: 'thumbnail__image' %>
+        <div class="caption">
+          <h3 class="thumbnail__header"><%= link_to course.name, course_path(:id => course.id), class: 'thumbnail__link' %></h3>
+          <p class="bold">Updated: <%= elapsed_time(course.updated_at) %> ago</p>
+          <% if course.prerequisites.present? %>
+            <p><strong>Prerequisites:</strong><br>
+              <% names = [] %>
+              <% course.prerequisites.each do |p| %>
+              <% names << p.name %>
+              <% end %>
+              <%= names.join(', ') %>
+            </p>
+          <% end %>
+          <% if course.locations.present? %>
+            <p><strong>Locations:</strong><br>
+              <% names = [] %>
+              <% course.locations.each do |p| %>
+              <% names << p.name %>
+              <% end %>
+              <%= names.join(', ') %>
+            </p>
+          <% else %>
+            <p class="red bold"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No Locations</p>
+          <% end %>
+          <% if course.categories.present? %>
+            <p><strong>Categories:</strong><br>
+              <% names = [] %>
+              <% course.categories.each do |p| %>
+              <% names << p.name %>
+              <% end %>
+              <%= names.join(', ') %>
+            </p>
+          <% else %>
+            <p class="red bold"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No Categories</p>
+          <% end %>
+          <div class="thumbnail__button-panel">
+              <div class="pull-left">
+                <% if (is_admin?) %>
+                  <%= link_to course_path(course.id), method: :delete, class: 'btn', title: "Remove #{course.name}" do %>
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  <% end %>
+                <% end %>
+                <% if (logged_in?) %>
+                  <%= link_to edit_course_path(course.id), class: 'btn', title: "Edit #{course.name}" do %>
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  <% end %>
+                <% end %>
+              </div>
+            <div class="pull-right">
+              <% if (is_admin?) %>
+                <%= link_to reset_votes_path(course.id), method: :delete, class: 'btn', title: "Reset Votes for #{course.name}" do %>
+                  <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                <% end %>
+              <% end %>
+              <%= link_to downvote_path(course.id), method: :post, class: 'btn', title: "Downvote #{course.name}" do %>
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>  <%= Downvote.where(course_id: course.id).count %>
+              <% end %>
+              <%= link_to upvote_path(course.id), method: :post, class: 'btn btn-primary', title: "Upvote #{course.name}" do %>
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>  <%= Upvote.where(course_id: course.id).count %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+<% end %>

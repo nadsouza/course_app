@@ -1,0 +1,4 @@
+<% provide(:title, "Edit Category - ") %>
+<h1>Edit <%= @category.name %> category</h1>
+<p class="lead">Enter a name to for a category.</p>
+<%= render 'categories/form', category: @category, url: category_path(@category), method: :put %>

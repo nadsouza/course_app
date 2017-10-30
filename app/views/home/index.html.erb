@@ -1,0 +1,40 @@
+<%= render 'shared/flash_messages' %>
+<div class="jumbotron">
+  <h1>It's the course app!</h1>
+  <p>Welcome to the Rapid Application Development assignment. Feel free to explore the website as much as you can.</p>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    <div class="block margin-bottom-three">
+      <% if (logged_in?) %>
+        <h3 class="margin-top-none">Categories</h3>
+        <p>Find your courses through a collection of categories.</p>
+        <%= link_to 'Browse Categories', categories_path, class: 'btn btn-primary' %>
+      <% else %>
+        <h3 class="margin-top-none">Register now!</h3>
+        <p>Visit the registration page to sign in as a coordinator.</p>
+        <%= link_to 'Register', login_path, class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4">
+    <div class="block margin-bottom-three">
+      <% if (logged_in?) %>
+        <h3 class="margin-top-none">Locations</h3>
+        <p>Get all available locations of the campus here.</p>
+        <%= link_to 'Browse Locations', locations_path, class: 'btn btn-primary' %>
+      <% else %>
+        <h3 class="margin-top-none">Already a coordinator?</h3>
+        <p>Login as a coordinator by visiting the login page.</p>
+        <%= link_to 'Login', login_path, class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4">
+    <div class="block margin-bottom-three">
+      <h3 class="margin-top-none">Courses</h3>
+      <p>View a collection of courses within the application.</p>
+      <%= link_to 'Browse Courses', courses_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>

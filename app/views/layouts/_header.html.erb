@@ -1,0 +1,82 @@
+<div class="heading">
+  <div class="container">
+    <%= link_to 'RMIT Course App', "/", class: 'navbar-brand' %>
+  </div>
+</div>
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="/categories" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% @categories.each do |category| %>
+              <li><%= link_to category.name, category %></li>
+            <% end %>
+            <% if (@categories.present?) %>
+              <li role="separator" class="divider"></li>
+            <% end %>
+            <li><%= link_to 'All Categories', categories_path %></li>
+            <% if logged_in? %>
+              <li><%= link_to 'Create Category', new_category_path %></li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="/location" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Location <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% @locations.each do |location| %>
+              <li><%= link_to location.name, location %></li>
+            <% end %>
+            <% if (@locations.present?) %>
+              <li role="separator" class="divider"></li>
+            <% end %>
+            <li><%= link_to 'All Locations', locations_path %></li>
+            <% if logged_in? %>
+              <li><%= link_to 'Create Location', new_location_path %></li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="/courses" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Courses <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'All Courses', courses_path %></li>
+            <% if logged_in? %>
+              <li><%= link_to 'Create Course', new_course_path %></li>
+            <% end %>
+          </ul>
+        </li>
+        <li>
+          <%= link_to 'Coordinators', users_path %>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if logged_in? %>
+          <li class="dropdown">
+          <a href="/courses" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Logged in as, <%= current_user.full_name %> <%= image_tag gravatar_url(current_user), class: 'navbar-avatar' %> <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'View Profile', user_path(current_user) %></li>
+            <li><%= link_to 'Edit Profile', edit_user_path(current_user) %></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to 'Logout', logout_path, method: :delete %></li>
+          </ul>
+        </li>
+        <% else %>
+          <li><%= link_to 'Register', register_path %></li>
+          <li><%= link_to 'Login', login_path %></li>
+        <% end %>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>

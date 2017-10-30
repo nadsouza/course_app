@@ -1,0 +1,51 @@
+ <% if (@categories.present?) %>
+  <h1 class="margin-bottom-three">All Categories</h1>
+  <p class="lead">List of all categories available.</p>
+  <%= render 'shared/flash_messages' %>
+  <table class="table table-hover block">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th class="text-center">Courses</th>
+        <th>Latest Course</th>
+        <th class="text-center">Date Added</th>
+        <th class="text-center">Last Updated</th>
+        <% if (logged_in?) %>
+          <th class="text-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each do |c| %>
+      <% course = c.courses.order(:updated_at).last %>
+      <tr>
+        <td><%= link_to c.name, category_path(c.id) %></td>
+        <td class="text-center"><%= c.courses.count %></td>
+        <td>
+          <% if (course.present?) %>
+            <%= link_to course.name, course_path(course.id) %>
+          <% else %>
+            None
+          <% end %>
+        </td>
+        <td class="text-center"><%= c.created_at.strftime("%d/%m/%Y") %></td>
+        <td class="text-center"><%= "#{elapsed_time(c.updated_at)} ago" %></td>
+        <% if (logged_in?) %>
+          <td class="text-right">
+              <%= link_to edit_category_path(c.id), title: "Edit #{c.name}" do %>
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <% end %>
+            <% if (is_admin?) %>
+              <%= link_to category_path(c.id), method: :delete, title: "Delete #{c.name}" do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= render 'shared/error_page', heading: 'Locations Not Found', message: 'Cannot find any locations within the application. Please create one by logging in as a user.' %>
+<% end %>

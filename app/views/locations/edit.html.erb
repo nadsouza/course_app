@@ -1,0 +1,4 @@
+<% provide(:title, "Edit Location - ") %>
+<h1>Edit <%= @location.name %> location</h1>
+<p class="lead">Edit the location below, example format 001.01.100</p>
+<%= render 'locations/form', location: @location, url: location_path(@location), method: :put %>

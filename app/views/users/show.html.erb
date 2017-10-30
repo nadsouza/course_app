@@ -1,0 +1,62 @@
+<%= render 'shared/flash_messages' %>
+<% if (@courses.present? || @votes.present?) %>
+  <div class="row">
+    <div class="col-xs-12 col-md-4 profile margin-bottom-three">
+      <%= render 'shared/profile_block' %>
+    </div>
+    <div class="col-xs-12 col-md-8">
+        <% if (@courses.present?) %>
+          <h3 class="margin-top-none">Courses created by <%= @user.full_name %></h3>
+          <table class="table block">
+            <thead>
+              <tr>
+                <th>Course Name</th>
+                <th class="text-center">Date Added</th>
+                <th class="text-center">Last Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @courses.each do |c| %>
+              <tr>
+                <td><%= link_to c.name, course_path(c.id) %></td>
+                <td class="text-center"><%= c.created_at.strftime("%d/%m/%Y") %></td>
+                <td class="text-center"><%= "#{elapsed_time(c.updated_at)} ago" %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+        <% if (@votes.present?) %>
+          <h3 class="margin-top-none">Courses voted by <%= @user.full_name %></h3>
+          <table class="table block">
+            <thead>
+              <tr>
+                <th>Course Name</th>
+                <th class="text-center">Vote</th>
+                <th class="text-center">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @votes.each do |v| %>
+              <tr>
+                <td><%= link_to v.course.name, course_path(v.course.id) %></td>
+                <td class="text-center">
+                  <% if (Upvote.exists?(user_id: @user.id, course_id: v.course.id)) %>
+                    <span class="glyphicon glyphicon-thumbs-up green" aria-hidden="true"></span>
+                  <% elsif (Downvote.exists?(user_id: @user.id, course_id: v.course.id)) %>
+                    <span class="glyphicon glyphicon-thumbs-down red" aria-hidden="true"></span>
+                  <% else %>
+                    -
+                  <% end %>
+                </td>
+                <td class="text-center"><%= "#{elapsed_time(v.created_at)} ago" %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+    </div>
+  </div>
+<% else %>
+  <%= render 'shared/profile_block' %>
+<% end %>
